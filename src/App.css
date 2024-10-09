@@ -5,18 +5,25 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+nav {
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.tictactoe-pos {
+  /* display: flex; */
+  box-sizing: border-box;
+  margin: 0
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+
+/* .tictactoe-pos > div > button {
+  color: black;
+  cursor: default;
+  border-radius: 0;
+  border-color: black;
+} */
 
 @keyframes logo-spin {
   from {
