@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Sudoku from 'sudoku';
+import { useState, useEffect } from "react";
+import Sudoku from "sudoku";
 
 const SudokuGame = () => {
   const [sudokuBoard, setSudokuBoard] = useState([]);
@@ -9,9 +9,8 @@ const SudokuGame = () => {
   // Generate a Sudoku puzzle when the component mounts
   useEffect(() => {
     const puzzle = Sudoku.makepuzzle();
-    // We check if solved is truthy, and sudokuBoard is correctly solved
     const solved = Sudoku.solvepuzzle(puzzle);
-    
+
     // Initialize boards
     setSudokuBoard(puzzle);
     console.log("Puzzle: ", puzzle);
@@ -22,15 +21,16 @@ const SudokuGame = () => {
 
   // Handle user input
   const handleChange = (index, value) => {
-    const newUserBoard = [...sudokuBoard];
+    if (!/^[0-9]?$/.test(value)) return // It DOESN`T WORK
+    const newUserBoard = [...userBoard];
     newUserBoard[index] = value;
-    setSudokuBoard(newUserBoard);
+    setUserBoard(newUserBoard);
     // console.log(newUserBoard);
   };
 
   // Check if the puzzle is solved
   const isSolved = () => {
-    return userBoard === solvedBoard;
+    return userBoard.every((value, index) => value === solvedBoard[index]);
   };
 
   // Render the Sudoku board
@@ -41,7 +41,7 @@ const SudokuGame = () => {
           key={index}
           type="text"
           maxLength="1"
-          value={value}
+          value={value === null ? "" : value}
           onChange={(e) => handleChange(index, e.target.value)}
           disabled={sudokuBoard[index] !== null} // Disable if it's a pre-filled cell
           className="sudoku-cell"
@@ -53,13 +53,14 @@ const SudokuGame = () => {
   return (
     <div className="sudoku-container">
       <h1>Sudoku Game</h1>
-      <div className="sudoku-board">
-        {renderBoard()}
-      </div>
-      {isSolved() && <div className="success-message">Congratulations! You solved the puzzle.</div>}
+      <div className="sudoku-board">{renderBoard()}</div>
+      {isSolved() && (
+        <div className="success-message">
+          Congratulations! You solved the puzzle.
+        </div>
+      )}
     </div>
   );
 };
 
 export default SudokuGame;
-
