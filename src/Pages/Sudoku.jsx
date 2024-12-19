@@ -2,38 +2,44 @@ import { useState, useEffect } from "react";
 import Sudoku from "sudoku";
 
 const SudokuGame = () => {
+  // STATES
   const [sudokuBoard, setSudokuBoard] = useState([]);
   const [solvedBoard, setSolvedBoard] = useState([]);
   const [userBoard, setUserBoard] = useState([]);
+  const [solved, setSolved] = useState(false);
 
-  // Generate a Sudoku puzzle when the component mounts
+  // GEN BOARD AND SOLUTION
   useEffect(() => {
     const puzzle = Sudoku.makepuzzle();
     const solved = Sudoku.solvepuzzle(puzzle);
 
-    // Initialize boards
     setSudokuBoard(puzzle);
-    console.log("Puzzle: ", puzzle);
-    console.log("Solved Puzzle: ", solved);
     setSolvedBoard(solved);
-    setUserBoard(puzzle);
+    console.log(solved);
+    setUserBoard(puzzle.map((val) => (val === null ? null : val))); // Initialize userBoard
   }, []);
 
-  // Handle user input
+  // FILL THE BOARD
   const handleChange = (index, value) => {
-    if (!/^[0-9]?$/.test(value)) return // It DOESN`T WORK
+    if (!/^[0-9]?$/.test(value)) return; // Limit input to 0-9
+
     const newUserBoard = [...userBoard];
-    newUserBoard[index] = value;
+    newUserBoard[index] = value === "" ? null : parseInt(value, 10);
     setUserBoard(newUserBoard);
-    // console.log(newUserBoard);
   };
 
-  // Check if the puzzle is solved
-  const isSolved = () => {
-    return userBoard.every((value, index) => value === solvedBoard[index]);
+  // CHECK WIN CONDITIONS
+  const checkWin = () => {
+    if (userBoard.every((val, idx) => val === solvedBoard[idx])){
+      setSolved(true);    
+    };
   };
 
-  // Render the Sudoku board
+  const solveSudoku = () => {
+    console.log("fill the board")
+  }
+
+  // RENDER THE BOARD
   const renderBoard = () => {
     return userBoard.map((value, index) => {
       return (
@@ -43,7 +49,7 @@ const SudokuGame = () => {
           maxLength="1"
           value={value === null ? "" : value}
           onChange={(e) => handleChange(index, e.target.value)}
-          disabled={sudokuBoard[index] !== null} // Disable if it's a pre-filled cell
+          disabled={sudokuBoard[index] !== null}
           className="sudoku-cell"
         />
       );
@@ -54,12 +60,19 @@ const SudokuGame = () => {
     <div className="sudoku-container">
       <h1>Sudoku Game</h1>
       <div className="sudoku-board">{renderBoard()}</div>
-      {isSolved() && (
+
+      {solved ? (
         <div className="success-message">
           Congratulations! You solved the puzzle.
         </div>
+      ) : (
+        <div>
+          <button className="solution-button" onClick={checkWin}>Check the solution</button>
+      <button className="solution-button" onClick={solveSudoku}>Show Solution</button>
+      </div>
       )}
     </div>
+   
   );
 };
 
