@@ -1,0 +1,75 @@
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: #fff;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.tictactoe-pos {
+  align-items: center;
+  justify-items: center;
+  /* margin: 20px auto; */
+  /* padding: 20px; */
+  background-color: #ecf0f1;
+  border: 2px solid #bdc3c7;
+  border-radius: 10px;
+}
+
+.tictactoe-pos div {
+
+  display: flex;
+  flex-wrap: wrap;
+  height: 64px;
+  width: 200px;
+  margin: 0;
+}
+
+.status {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #303030;
+}
+
+button.tic-button {
+  height: 64px;
+  width: 64px;
+  border: solid 1px;
+  cursor: default;
+  border-radius: 0;
+  color: rgb(230, 230, 230);
+  border-color: rgb(0, 0, 0);
+  background-color: rgb(88, 88, 88);
+}
+
+button.tic-button.x {
+  background-color: #3498db;
+  color: #fff;
+}
+
+button.tic-button.o {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+button.start-game {
+  margin-top: 15px;
+  background-color: #e74c3c;
+}
+
+button.start-game:hover {
+  background-color: #c0392b;
+}
